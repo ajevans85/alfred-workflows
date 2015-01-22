@@ -16,7 +16,7 @@ Alfred.with_friendly_error do |alfred|
   if File.exists?(cache) and File.stat(cache).mtime > Time.now - 60*60*2
     j = File.read(cache)
   else
-    password = `security -p Alfred find-internet-password -w -a #{account} -s bitbucket.org`.strip!
+    password = `security 2>&1 >/dev/null -p Alfred find-internet-password -w -a #{account} -s bitbucket.org`.strip!
 
     if $?.exitstatus > 0
       raise Alfred::ObjCError, "Error getting Bitbucket password from keychain, does this exist for #{account}"
